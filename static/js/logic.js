@@ -1,4 +1,4 @@
-var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson";
 
 d3.json(queryUrl,function(data){
     createFeatures(data.features);
@@ -39,7 +39,9 @@ function createFeatures(earthquakeData) {
       id: "mapbox.dark",
       accessToken: API_KEY
     });
-  
+
+
+    
     // Define a baseMaps object to hold our base layers
     var baseMaps = {
       "Street Map": streetmap,
