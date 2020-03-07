@@ -140,53 +140,89 @@ var info = L.control({
   position: "bottomright"
 });
 
-var colors= ["#fef0d9","#fdd49e",'#fdbb84','#fc8d59','#e34a33','#b30000']
-function getColor(d) {
-  return d === '0-1'  ? "#de2d26" :
-         d === '1-2'  ? "#377eb8" :
-         d === '2-3' ? "#4daf4a" :
-         d === '3-4' ? "#984ea3" :
-         d === '4-5' ? "#984ea3" :
-                      "#ff7f00";
-}
+// var colors= ["#fef0d9","#fdd49e",'#fdbb84','#fc8d59','#e34a33','#b30000']
+// function getColor(d) {
+//   return d === '0-1'  ? "#de2d26" :
+//          d === '1-2'  ? "#377eb8" :
+//          d === '2-3' ? "#4daf4a" :
+//          d === '3-4' ? "#984ea3" :
+//          d === '4-5' ? "#984ea3" :
+//                       "#ff7f00";
+// }
 
-function style(feature) {
-  return {
-      weight: 1.5,
-      opacity: 1,
-      fillOpacity: 1,
-      radius: 6,
-      fillColor: getColor(),
-      color: "grey"
+// function style(feature) {
+//   return {
+//       weight: 1.5,
+//       opacity: 1,
+//       fillOpacity: 1,
+//       radius: 6,
+//       fillColor: getColor(),
+//       color: "grey"
 
-  };
-}
-var legend = L.control({position: 'bottomleft', background: 'white'});
-  legend.onAdd = function () {
+//   };
+// }
+// var legend = L.control({position: 'bottomleft', background: 'white'});
+//   legend.onAdd = function (myMap) {
 
-  var div = L.DomUtil.create('div', 'info legend');
-  labels = ['<strong>Categories</strong>'],
-  categories = ["zeroToOne",
+//   var div = L.DomUtil.create('div', 'info legend');
+//   labels = ['<strong>Categories</strong>'],
+  // categories = ["zeroToOne",
+  //               "oneToTwo",
+  //               "twoToThree",
+  //               "threeToFour",
+  //               "fourToFive",
+  //               "fivePlus"]
+  
+
+
+//   for (var i = 0; i < categories.length; i++) {
+
+//           div.innerHTML += 
+//           labels.push(
+//             '<i style="background:' + getColor(categories[i] + 1) + '"></i> ' +
+//             (categories[i] ? categories[i] : '+'));
+
+//       }
+//       div.innerHTML = labels.join('<br>');
+//   return div;
+//   };
+//   legend.addTo(myMap);
+
+
+var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend");
+    var limits = ["zeroToOne",
                 "oneToTwo",
                 "twoToThree",
                 "threeToFour",
                 "fourToFive",
                 "fivePlus"]
-  
+    var colors= ["#fef0d9","#fdd49e",'#fdbb84','#fc8d59','#e34a33','#b30000'];
+    var labels = [];
 
+    // Add min & max
+    var legendInfo = "<h1>Median Income</h1>" +
+      "<div class=\"labels\">" +
+        "<div class=\"min\">" + limits[0] + "</div>" +
+        "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+      "</div>";
 
-  for (var i = 0; i < categories.length; i++) {
+    div.innerHTML = legendInfo;
 
-          div.innerHTML += 
-          labels.push(
-            '<i style="background:' + getColor(categories[i] + 1) + '"></i> ' +
-            (categories[i] ? categories[i] : '+'));
+    limits.forEach(function(limit, index) {
+      labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+    });
 
-      }
-      div.innerHTML = labels.join('<br>');
-  return div;
+    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+    return div;
   };
+
+  // Adding legend to the map
   legend.addTo(myMap);
+
+
+
 d3.json(queryUrl, function(response) {
     
   // Create a new marker cluster group
