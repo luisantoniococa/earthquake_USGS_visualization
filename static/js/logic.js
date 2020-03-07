@@ -1,4 +1,4 @@
-var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson";
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 d3.json(queryUrl,function(data){
     createFeatures(data.features);
@@ -12,7 +12,12 @@ function createFeatures(earthquakeData) {
       layer.bindPopup("<h3>" + feature.properties.place +
         "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
     }
-  
+    
+
+
+    
+   
+    
     // Create a GeoJSON layer containing the features array on the earthquakeData object
     // Run the onEachFeature function once for each piece of data in the array
     var earthquakes = L.geoJSON(earthquakeData, {
@@ -61,7 +66,10 @@ function createFeatures(earthquakeData) {
       zoom: 5,
       layers: [streetmap, earthquakes]
     });
-  
+        
+          // Add our marker cluster layer to the map
+          
+
     // Create a layer control
     // Pass in our baseMaps and overlayMaps
     // Add the layer control to the map
