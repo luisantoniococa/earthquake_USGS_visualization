@@ -54,6 +54,39 @@ var info = L.control({
   position: "bottomright"
 });
 
+var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend");
+    var limits = ["zeroToOne",
+                "oneToTwo",
+                "twoToThree",
+                "threeToFour",
+                "fourToFive",
+                "fivePlus"]
+    var colors= ["#fef0d9","#fdd49e",'#fdbb84','#fc8d59','#e34a33','#b30000'];
+    var labels = [];
+
+    // Add min & max
+    var legendInfo = "<h1>Magnitude</h1>" +
+      "<div class=\"labels\">" +
+        "<div class=\"min\"> 0 </div>" +
+        "<div class=\"max\"> 5 </div>" +
+      "</div>";
+
+    div.innerHTML = legendInfo;
+
+    limits.forEach(function(limit, index) {
+      labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+    });
+
+    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+    return div;
+  };
+
+  // Adding legend to the map
+  legend.addTo(myMap);
+
+
 
 d3.json(queryUrl, function(response) {
     
